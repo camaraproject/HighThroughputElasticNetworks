@@ -5,7 +5,7 @@
 <a href="https://github.com/camaraproject/HighThroughputElasticNetworks" title="Repo Size"><img src="https://img.shields.io/github/repo-size/camaraproject/HighThroughputElasticNetworks?style=plastic"></a>
 <a href="https://github.com/camaraproject/HighThroughputElasticNetworks/blob/main/LICENSE" title="License"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg?style=plastic"></a>
 <a href="https://github.com/camaraproject/HighThroughputElasticNetworks/releases/latest" title="Latest Release"><img src="https://img.shields.io/github/release/camaraproject/HighThroughputElasticNetworks?style=plastic"></a>
-<a href="https://github.com/camaraproject/Governance/blob/main/ProjectStructureAndRoles.md" title="Sandbox API Repository"><img src="https://img.
+<a href="https://github.com/camaraproject/Governance/blob/main/ProjectStructureAndRoles.md" title="Sandbox API Repository"><img src="https://img.shields.io/badge/Sandbox%20API%20Repository-yellow?style=plastic"></a>
 
 # HighThroughputElasticNetworks
 Sandbox Repository to describe, develop, document, and test the service APIs for HighThroughputElasticNetworks
@@ -37,5 +37,5 @@ The repository has no (pre)releases yet, work in progress is within the main bra
     * Minutes: Access [meeting minutes] !! update this link to your wiki page using the "Share" link
 * Mailing List
     <!-- Note: the $sub-project-mailinglistname$ is either already existing or will be created by the CAMARA Admin Team  -->
-    * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/hten>.
-    * A message to the community of this Sub Project can be sent using <hten@lists.camaraproject.org>.
+    * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/sp-hten>.
+    * A message to the community of this Sub Project can be sent using <sp-hten@lists.camaraproject.org>.
