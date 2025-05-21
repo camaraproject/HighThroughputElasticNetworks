@@ -8,7 +8,7 @@
 <a href="https://github.com/camaraproject/Governance/blob/main/ProjectStructureAndRoles.md" title="Sandbox API Repository"><img src="https://img.shields.io/badge/Sandbox%20API%20Repository-yellow?style=plastic"></a>
 
 # HighThroughputElasticNetworks
-Sandbox Repository to describe, develop, document, and test the service APIs for HighThroughputElasticNetworks
+
 Sandbox API Repository to describe, develop, document, and test the HighThroughputElasticNetworks Service API(s). The repository does not yet belong to a CAMARA Sub Project.
 
 * API Repository [wiki page](https://lf-camaraproject.atlassian.net/wiki/x/wQAkAw)
