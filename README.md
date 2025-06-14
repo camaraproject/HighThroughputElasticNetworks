@@ -31,11 +31,10 @@ The repository has no (pre)releases yet, work in progress is within the main bra
 <!-- For changes see [CHANGELOG.md](https://github.com/camaraproject/HighThroughputElasticNetworks/blob/main/CHANGELOG.md) -->
 
 ## Contributing
-* Meetings are held virtually <!-- for new API families request a meeting link from the LF admin team or replace the information with the existing meeting information (of the API family) -->
+* Meetings are held virtually
     * Schedule: !! tbd
     * [Registration / Join](https://wiki.camaraproject.org/x/TQAG) !! Update this link with your meeting registration/join link
     * Minutes: Access [meeting minutes] !! update this link to your wiki page using the "Share" link
 * Mailing List
-    <!-- Note: the $sub-project-mailinglistname$ is either already existing or will be created by the CAMARA Admin Team  -->
     * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/sp-hten>.
     * A message to the community of this Sub Project can be sent using <sp-hten@lists.camaraproject.org>.
