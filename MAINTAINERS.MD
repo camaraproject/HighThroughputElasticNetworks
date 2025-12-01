@@ -1,3 +1,4 @@
-| Org                    | Name                                      | GitHub Username        |
-| -----------------------| ------------------------------------------| -----------------------|
-| §company§ | §name§ | §github_username§ |
+| Org          | Name        | GitHub Username |
+| ------------ | ----------- | --------------- |
+| China Mobile | Ruobei Wang | wangruobei      |
+| China Mobile | Xin Xie     | xiexin1008      |
