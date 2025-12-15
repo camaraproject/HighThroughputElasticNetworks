@@ -33,7 +33,6 @@ servers:
     apiRoot:
       default: http://localhost:9091
       description: API root, defined by the service provider, e.g. `api.example.com` or `api.example.com/somepath`
-
 paths:
   /high-throughput-elastic-network/transmission/schedule:
     post:
@@ -368,4 +367,3 @@ components:
           type: object
           additionalProperties: true
           description: Optional detailed error information (e.g., invalid parameter name, resource shortage details)
-
