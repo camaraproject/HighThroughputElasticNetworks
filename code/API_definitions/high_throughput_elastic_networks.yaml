@@ -33,9 +33,12 @@ servers:
     apiRoot:
       default: http://localhost:9091
       description: API root, defined by the service provider, e.g. `api.example.com` or `api.example.com/somepath`
+
 paths:
   /high-throughput-elastic-network/transmission/schedule:
     post:
+      operationId: scheduleTransmission
+      tags: ["HighThroughputElasticNetwork", "TransmissionScheduling"]
       summary: Submit high-throughput data transmission scheduling request
       description: Schedules network resources based on bandwidth, latency, file size and guarantee requirements, returns transmission plan and statistics
       security:
@@ -118,9 +121,9 @@ components:
       type: oauth2
       flows:
         authorizationCode:
-          authorizationUrl: https://{authServer}/oauth/authorize
-          tokenUrl: https://{authServer}/oauth/token
-          refreshUrl: https://{authServer}/oauth/token
+          authorizationUrl: https://auth.example.com/oauth/authorize
+          tokenUrl: https://auth.example.com/oauth/token
+          refreshUrl: https://auth.example.com/oauth/token
           scopes:
             high_throughput_elastic_network:read: Read transmission information and statistics
             high_throughput_elastic_network:write: Submit and manage transmission requests
@@ -133,6 +136,7 @@ components:
     # Input Schema (corresponds to input_parameters)
     TransmissionRequest:
       type: object
+      description: Request parameters for scheduling high-throughput data transmission in elastic networks
       required:
         - bandwidth_requirement
         - bandwidth_requirement_type
@@ -221,6 +225,7 @@ components:
     # Output Schema - Scheduling Successful (Transmission Pending)
     TransmissionScheduledResponse:
       type: object
+      description: Response containing estimated transmission details after successful scheduling
       required:
         - execution_result
         - time_segmented_transmission_rate
@@ -271,6 +276,7 @@ components:
     # Output Schema - Transmission Completed
     TransmissionCompletedResponse:
       type: object
+      description: Response containing full transmission statistics after successful completion
       required:
         - execution_result
         - time_segmented_transmission_rate
@@ -347,6 +353,7 @@ components:
     # Error Response Schema
     ErrorResponse:
       type: object
+      description: Response containing error details when API call or scheduling fails
       required:
         - execution_result
         - error_code
