@@ -8,12 +8,10 @@ info:
     Last Updated: 2025-12-01
     Category: Network & Data Transmission
     Classification: Commercial (Production-Grade)
-    
     Core Capabilities:
     - Intelligent scheduling for massive data transmission in IP networks
     - Autonomous load-balanced path calculation based on user parameters
     - Key technologies: Dynamic elastic bandwidth allocation, tidal-traffic-aware segment list adjustment, SRv6 multi-segment list technology
-    
     Target Application Scenarios:
     - Cross-cloud backup
     - Model training at intelligent compute centers
@@ -21,7 +19,6 @@ info:
     - Scientific computing (e.g., astronomical observation, meteorological simulation)
     - Large-scale data migration
     - High-performance computing (HPC) data sharing
-    
     Commercial Status: Fully commercialized with verified use cases (e.g., FAST Telescope)
   license:
     name: Apache 2.0
@@ -30,14 +27,12 @@ info:
 externalDocs:
   description: Product documentation at CAMARA
   url: https://github.com/camaraproject/HighThroughputElasticNetworks
-
 servers:
 - url: "{apiRoot}/high-throughput-elastic-network/vwip"
   variables:
     apiRoot:
       default: http://localhost:9091
       description: API root, defined by the service provider, e.g. `api.example.com` or `api.example.com/somepath`
-
 paths:
   /high-throughput-elastic-network/transmission/schedule:
     post:
@@ -74,7 +69,6 @@ paths:
                   guarantee_requirements:
                     bandwidth_guarantee_level: "hard_guarantee"
                     load_sharing_strategy: "traffic_aware"
-
       responses:
         '200':
           description: Scheduling successful - returns estimated transmission details
@@ -224,7 +218,6 @@ components:
               default: traffic_aware
               description: Network load balancing strategy for multi-path transmission
           description: Bandwidth guarantee level and load sharing strategy requirements
-
     # Helper Schema for Latency Constraint
     MinLatencyLessOrEqualMaxLatency:
       type: object
@@ -288,7 +281,6 @@ components:
               enum: [seconds, minutes, hours]
               description: Duration unit
           description: Total estimated time required to complete the entire data transmission (calculated based on input parameters and network load)
-
     # Output Schema - Transmission Completed
     TransmissionCompletedResponse:
       type: object
@@ -357,7 +349,6 @@ components:
                   description: Latency unit
               description: Actual end-to-end latency statistics during transmission
           description: Statistical summary after successful completion of transmission
-
     # Error Response Schema
     ErrorResponse:
       type: object
