@@ -28,12 +28,11 @@ externalDocs:
   description: Product documentation at CAMARA
   url: https://github.com/camaraproject/HighThroughputElasticNetworks
 servers:
-- url: "{apiRoot}/high-throughput-elastic-network/vwip"
-  variables:
-    apiRoot:
-      default: http://localhost:9091
-      description: API root, defined by the service provider, e.g. `api.example.com` or `api.example.com/somepath`
-
+  - url: "{apiRoot}/high-throughput-elastic-network/vwip"
+    variables:
+      apiRoot:
+        default: http://localhost:9091
+        description: API root, defined by the service provider, e.g. `api.example.com` or `api.example.com/somepath`
 paths:
   /high-throughput-elastic-network/transmission/schedule:
     post:
@@ -72,7 +71,6 @@ paths:
                   guarantee_requirements:
                     bandwidth_guarantee_level: "hard_guarantee"
                     load_sharing_strategy: "traffic_aware"
-
       responses:
         '200':
           description: Scheduling successful - returns estimated transmission details
@@ -133,7 +131,6 @@ components:
         - Token Endpoint: Provided by the service provider (typically https://auth.provider.com/oauth/token)
         - Scopes: Use 'high_throughput_elastic_network:read' for read operations and 'high_throughput_elastic_network:write' for write operations
   schemas:
-    # Input Schema (corresponds to input_parameters)
     TransmissionRequest:
       type: object
       description: Request parameters for scheduling high-throughput data transmission in elastic networks
@@ -221,8 +218,6 @@ components:
               default: traffic_aware
               description: Network load balancing strategy for multi-path transmission
           description: Bandwidth guarantee level and load sharing strategy requirements
-
-    # Output Schema - Scheduling Successful (Transmission Pending)
     TransmissionScheduledResponse:
       type: object
       description: Response containing estimated transmission details after successful scheduling
@@ -272,8 +267,6 @@ components:
               enum: [seconds, minutes, hours]
               description: Duration unit
           description: Total estimated time required to complete the entire data transmission (calculated based on input parameters and network load)
-
-    # Output Schema - Transmission Completed
     TransmissionCompletedResponse:
       type: object
       description: Response containing full transmission statistics after successful completion
@@ -349,8 +342,6 @@ components:
                   description: Latency unit
               description: Actual end-to-end latency statistics during transmission
           description: Statistical summary after successful completion of transmission
-
-    # Error Response Schema
     ErrorResponse:
       type: object
       description: Response containing error details when API call or scheduling fails
