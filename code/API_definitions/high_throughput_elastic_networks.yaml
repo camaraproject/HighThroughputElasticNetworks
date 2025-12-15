@@ -8,12 +8,10 @@ info:
     Last Updated: 2025-12-15
     Category: Network & Data Transmission
     Classification: Commercial (Production-Grade)
-    
     Core Capabilities:
     - Intelligent scheduling for massive data transmission in IP networks
     - Autonomous load-balanced path calculation based on user parameters
     - Key technologies: Dynamic elastic bandwidth allocation, tidal-traffic-aware segment list adjustment, SRv6 multi-segment list technology
-    
     Target Application Scenarios:
     - Cross-cloud backup
     - Model training at intelligent compute centers
@@ -21,7 +19,6 @@ info:
     - Scientific computing (e.g., astronomical observation, meteorological simulation)
     - Large-scale data migration
     - High-performance computing (HPC) data sharing
-    
     Commercial Status: Fully commercialized with verified use cases (e.g., FAST Telescope)
   license:
     name: Apache 2.0
@@ -30,7 +27,6 @@ info:
 externalDocs:
   description: Product documentation at CAMARA
   url: https://github.com/camaraproject/HighThroughputElasticNetworks
-
 servers:
 - url: "{apiRoot}/high-throughput-elastic-network/vwip"
   variables:
@@ -372,3 +368,4 @@ components:
           type: object
           additionalProperties: true
           description: Optional detailed error information (e.g., invalid parameter name, resource shortage details)
+
