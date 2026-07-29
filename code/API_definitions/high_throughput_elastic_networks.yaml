@@ -1,0 +1,367 @@
+openapi: 3.0.3
+info:
+  title: High-Throughput Elastic Network API (China Mobile)
+  description: |
+    API Proposal: High-Throughput Elastic Network (China Mobile)
+    Proposal ID: APIproposal_high_throughput_elastic_network_ChinaMobile
+    Version: wip
+    Last Updated: 2025-12-15
+    Category: Network & Data Transmission
+    Classification: Commercial (Production-Grade)
+    Core Capabilities:
+    - Intelligent scheduling for massive data transmission in IP networks
+    - Autonomous load-balanced path calculation based on user parameters
+    - Key technologies: Dynamic elastic bandwidth allocation, tidal-traffic-aware segment list adjustment, SRv6 multi-segment list technology
+    Target Application Scenarios:
+    - Cross-cloud backup
+    - Model training at intelligent compute centers
+    - Professional video editing (4K/8K content production)
+    - Scientific computing (e.g., astronomical observation, meteorological simulation)
+    - Large-scale data migration
+    - High-performance computing (HPC) data sharing
+    Commercial Status: Fully commercialized with verified use cases (e.g., FAST Telescope)
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: wip
+externalDocs:
+  description: Product documentation at CAMARA
+  url: https://github.com/camaraproject/HighThroughputElasticNetworks
+servers:
+  - url: "{apiRoot}/high-throughput-elastic-network/vwip"
+    variables:
+      apiRoot:
+        default: http://localhost:9091
+        description: API root, defined by the service provider, e.g. `api.example.com` or `api.example.com/somepath`
+paths:
+  /high-throughput-elastic-network/transmission/schedule:
+    post:
+      operationId: scheduleTransmission
+      tags: ["HighThroughputElasticNetwork", "TransmissionScheduling"]
+      summary: Submit high-throughput data transmission scheduling request
+      description: Schedules network resources based on bandwidth, latency, file size and guarantee requirements, returns transmission plan and statistics
+      security:
+        - ApiKeyAuth: []
+        - OAuth2: [high_throughput_elastic_network:read, high_throughput_elastic_network:write]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransmissionRequest'
+            examples:
+              FASTTelescopeExample:
+                summary: FAST Telescope Data Transmission Request
+                value:
+                  bandwidth_requirement:
+                    - time_segment: "2025-11-23 08:00-2025-11-23 12:00"
+                      bandwidth_value: 10.0
+                      unit: "Gbps"
+                    - time_segment: "2025-12-01 14:00-2025-12-01 18:00"
+                      bandwidth_value: 15.0
+                      unit: "Gbps"
+                  bandwidth_requirement_type: "two_way_bandwidth"
+                  latency_requirement:
+                    min_latency: 20.0
+                    max_latency: 50.0
+                    unit: "ms"
+                  file_requirements:
+                    file_size: 10.0
+                    unit: "PB"
+                  guarantee_requirements:
+                    bandwidth_guarantee_level: "hard_guarantee"
+                    load_sharing_strategy: "traffic_aware"
+      responses:
+        '200':
+          description: Scheduling successful - returns estimated transmission details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransmissionScheduledResponse'
+        '201':
+          description: Transmission completed - returns full statistics (only when transmission finishes synchronously)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransmissionCompletedResponse'
+        '400':
+          description: Bad request - invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error - e.g., insufficient network resources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authentication
+      description: API key for authentication
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.example.com/oauth/authorize
+          tokenUrl: https://auth.example.com/oauth/token
+          refreshUrl: https://auth.example.com/oauth/token
+          scopes:
+            high_throughput_elastic_network:read: Read transmission information and statistics
+            high_throughput_elastic_network:write: Submit and manage transmission requests
+      description: |
+        OAuth 2.0 authorization code flow.
+        - Authorization Endpoint: Provided by the service provider (typically https://auth.provider.com/oauth/authorize)
+        - Token Endpoint: Provided by the service provider (typically https://auth.provider.com/oauth/token)
+        - Scopes: Use 'high_throughput_elastic_network:read' for read operations and 'high_throughput_elastic_network:write' for write operations
+  schemas:
+    TransmissionRequest:
+      type: object
+      description: Request parameters for scheduling high-throughput data transmission in elastic networks
+      required:
+        - bandwidth_requirement
+        - bandwidth_requirement_type
+        - latency_requirement
+        - file_requirements
+        - guarantee_requirements
+      properties:
+        bandwidth_requirement:
+          type: array
+          items:
+            type: object
+            required:
+              - time_segment
+              - bandwidth_value
+              - unit
+            properties:
+              time_segment:
+                type: string
+                pattern: '^\d{4}-\d{2}-\d{2} ([01][0-9]|2[0-3]):[0-5][0-9]-\d{4}-\d{2}-\d{2} ([01][0-9]|2[0-3]):[0-5][0-9]$'
+                description: Time segment in "YYYY-MM-DD HH:MM-YYYY-MM-DD HH:MM" format
+              bandwidth_value:
+                type: number
+                minimum: 0.001
+                description: Bandwidth value (supports decimal precision)
+              unit:
+                type: string
+                enum: [Gbps, Mbps]
+                description: Bandwidth unit
+          description: Time-segmented bandwidth requirements (multiple time points supported)
+        bandwidth_requirement_type:
+          type: string
+          enum: [upload_bandwidth, download_bandwidth, two_way_bandwidth]
+          description: Type of bandwidth service required. Two-way bandwidth means symmetric upload/download speeds.
+        latency_requirement:
+          type: object
+          required:
+            - min_latency
+            - max_latency
+            - unit
+          properties:
+            min_latency:
+              type: number
+              minimum: 0.1
+              description: Minimum end-to-end network latency (must be ≤ max_latency)
+            max_latency:
+              type: number
+              minimum: 0.1
+              description: Maximum end-to-end network latency
+            unit:
+              type: string
+              enum: [ms]
+              description: Latency unit (only milliseconds supported)
+          description: Range of end-to-end network latency guarantee
+        file_requirements:
+          type: object
+          required:
+            - file_size
+            - unit
+          properties:
+            file_size:
+              type: number
+              minimum: 0.001
+              description: Total size of files to be transmitted (sum for multiple files)
+            unit:
+              type: string
+              enum: [B, KB, MB, GB, TB, PB]
+              description: File size unit
+          description: Size of files to be transmitted (single file or total volume of multiple files)
+        guarantee_requirements:
+          type: object
+          required:
+            - bandwidth_guarantee_level
+            - load_sharing_strategy
+          properties:
+            bandwidth_guarantee_level:
+              type: string
+              enum: [hard_guarantee, soft_guarantee]
+              description: Bandwidth guarantee level. Hard guarantee = strictly guaranteed; Soft guarantee = best-effort.
+            load_sharing_strategy:
+              type: string
+              enum: [equal_load, priority_based, traffic_aware]
+              default: traffic_aware
+              description: Network load balancing strategy for multi-path transmission
+          description: Bandwidth guarantee level and load sharing strategy requirements
+    TransmissionScheduledResponse:
+      type: object
+      description: Response containing estimated transmission details after successful scheduling
+      required:
+        - execution_result
+        - time_segmented_transmission_rate
+        - estimated_transmission_duration
+      properties:
+        execution_result:
+          type: string
+          enum: [success]
+          description: API call and transmission scheduling result
+        time_segmented_transmission_rate:
+          type: array
+          items:
+            type: object
+            required:
+              - time_segment
+              - estimated_rate
+              - unit
+            properties:
+              time_segment:
+                type: string
+                pattern: '^\d{4}-\d{2}-\d{2} ([01][0-9]|2[0-3]):[0-5][0-9]-\d{4}-\d{2}-\d{2} ([01][0-9]|2[0-3]):[0-5][0-9]$'
+                description: Time segment matching input
+              estimated_rate:
+                type: number
+                minimum: 0.001
+                description: Estimated transmission rate for the time segment
+              unit:
+                type: string
+                enum: [Gbps, Mbps]
+                description: Transmission rate unit (consistent with input bandwidth unit)
+          description: Estimated transmission rate for each time segment (matches input time segments)
+        estimated_transmission_duration:
+          type: object
+          required:
+            - total_duration
+            - unit
+          properties:
+            total_duration:
+              type: number
+              minimum: 0.1
+              description: Total estimated time to complete data transmission
+            unit:
+              type: string
+              enum: [seconds, minutes, hours]
+              description: Duration unit
+          description: Total estimated time required to complete the entire data transmission (calculated based on input parameters and network load)
+    TransmissionCompletedResponse:
+      type: object
+      description: Response containing full transmission statistics after successful completion
+      required:
+        - execution_result
+        - time_segmented_transmission_rate
+        - estimated_transmission_duration
+        - post_transmission_statistics
+      properties:
+        execution_result:
+          type: string
+          enum: [success]
+          description: API call, scheduling and transmission completion result
+        time_segmented_transmission_rate:
+          $ref: '#/components/schemas/TransmissionScheduledResponse/properties/time_segmented_transmission_rate'
+        estimated_transmission_duration:
+          $ref: '#/components/schemas/TransmissionScheduledResponse/properties/estimated_transmission_duration'
+        post_transmission_statistics:
+          type: object
+          required:
+            - actual_transmission_duration
+            - average_transmission_rate
+            - data_transmitted_volume
+            - latency_statistics
+          properties:
+            actual_transmission_duration:
+              type: number
+              minimum: 0.1
+              description: Actual time taken to complete the transmission
+              properties:
+                unit:
+                  type: string
+                  enum: [seconds]
+            average_transmission_rate:
+              type: number
+              minimum: 0.001
+              description: Average transmission rate during the entire process
+              properties:
+                unit:
+                  type: string
+                  enum: [Gbps, Mbps]
+            data_transmitted_volume:
+              type: number
+              minimum: 0.001
+              description: Actual volume of data transmitted (verified against input file size)
+              properties:
+                unit:
+                  type: string
+                  enum: [B, KB, MB, GB, TB, PB]
+            latency_statistics:
+              type: object
+              required:
+                - average_latency
+                - max_latency
+                - min_latency
+                - unit
+              properties:
+                average_latency:
+                  type: number
+                  minimum: 0.1
+                  description: Average end-to-end latency during transmission
+                max_latency:
+                  type: number
+                  minimum: 0.1
+                  description: Maximum end-to-end latency during transmission
+                min_latency:
+                  type: number
+                  minimum: 0.1
+                  description: Minimum end-to-end latency during transmission
+                unit:
+                  type: string
+                  enum: [ms]
+                  description: Latency unit
+              description: Actual end-to-end latency statistics during transmission
+          description: Statistical summary after successful completion of transmission
+    ErrorResponse:
+      type: object
+      description: Response containing error details when API call or scheduling fails
+      required:
+        - execution_result
+        - error_code
+        - error_message
+      properties:
+        execution_result:
+          type: string
+          enum: [failure]
+          description: API call and transmission scheduling result
+        error_code:
+          type: string
+          pattern: '^[A-Z0-9_]+$'
+          description: Machine-readable error code (e.g., INVALID_PARAMETER, INSUFFICIENT_RESOURCES)
+        error_message:
+          type: string
+          description: Human-readable error description
+        details:
+          type: object
+          additionalProperties: true
+          description: Optional detailed error information (e.g., invalid parameter name, resource shortage details)
